@@ -31,22 +31,10 @@ const FormPage = () => {
     for (let key in formData) {
       if (!formData[key]) newErrors[key] = "This field is required";
     }
-    if (
-      formData.aadhar &&
-      !/^\d{12}$/.test(formData.aadhar)
-    ) newErrors.aadhar = "Aadhar must be 12 digits";
-    if (
-      formData.pan &&
-      !/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(formData.pan)
-    ) newErrors.pan = "Invalid PAN format";
-    if (
-      formData.email &&
-      !/\S+@\S+\.\S+/.test(formData.email)
-    ) newErrors.email = "Invalid email format";
-    if (
-      formData.phoneNumber &&
-      !/^\d{10}$/.test(formData.phoneNumber)
-    ) newErrors.phoneNumber = "Phone must be 10 digits";
+    if (formData.aadhar && !/^\d{12}$/.test(formData.aadhar)) newErrors.aadhar = "Aadhar must be 12 digits";
+    if (formData.pan && !/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(formData.pan)) newErrors.pan = "Invalid PAN format";
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email format";
+    if (formData.phoneNumber && !/^\d{10}$/.test(formData.phoneNumber)) newErrors.phoneNumber = "Phone must be 10 digits";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -64,7 +52,7 @@ const FormPage = () => {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="form-container">
       <h2>Registration Form</h2>
       <form onSubmit={handleSubmit}>
         {[
@@ -83,7 +71,7 @@ const FormPage = () => {
             ),
           },
         ].map((field) => (
-          <div key={field.name}>
+          <div className="form-group" key={field.name}>
             <label>{field.label}:</label>
             <input
               type={field.type || "text"}
@@ -92,27 +80,29 @@ const FormPage = () => {
               onChange={handleChange}
             />
             {field.extra}
-            {errors[field.name] && <p style={{ color: "red" }}>{errors[field.name]}</p>}
+            {errors[field.name] && <p className="error">{errors[field.name]}</p>}
           </div>
         ))}
 
-        <div>
+        <div className="form-group">
           <label>Phone No:</label>
-          <select name="phoneCode" value={formData.phoneCode} onChange={handleChange}>
-            <option value="+91">+91</option>
-            <option value="+1">+1</option>
-            <option value="+44">+44</option>
-          </select>
-          <input
-            type="text"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-          {errors.phoneNumber && <p style={{ color: "red" }}>{errors.phoneNumber}</p>}
+          <div style={{ display: "flex", gap: "10px" }}>
+            <select name="phoneCode" value={formData.phoneCode} onChange={handleChange}>
+              <option value="+91">+91</option>
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+            </select>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+          </div>
+          {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Country:</label>
           <select name="country" value={formData.country} onChange={handleChange}>
             <option value="">--Select--</option>
@@ -122,10 +112,10 @@ const FormPage = () => {
               </option>
             ))}
           </select>
-          {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
+          {errors.country && <p className="error">{errors.country}</p>}
         </div>
 
-        <div>
+        <div className="form-group">
           <label>City:</label>
           <select name="city" value={formData.city} onChange={handleChange}>
             <option value="">--Select--</option>
@@ -136,19 +126,19 @@ const FormPage = () => {
                 </option>
               ))}
           </select>
-          {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
+          {errors.city && <p className="error">{errors.city}</p>}
         </div>
 
-        <div>
+        <div className="form-group">
           <label>PAN No:</label>
           <input name="pan" value={formData.pan} onChange={handleChange} />
-          {errors.pan && <p style={{ color: "red" }}>{errors.pan}</p>}
+          {errors.pan && <p className="error">{errors.pan}</p>}
         </div>
 
-        <div>
+        <div className="form-group">
           <label>Aadhar No:</label>
           <input name="aadhar" value={formData.aadhar} onChange={handleChange} />
-          {errors.aadhar && <p style={{ color: "red" }}>{errors.aadhar}</p>}
+          {errors.aadhar && <p className="error">{errors.aadhar}</p>}
         </div>
 
         <button type="submit" disabled={!validate()}>
