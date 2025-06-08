@@ -5,6 +5,7 @@ function FormPage() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+  
     firstName: "",
     lastName: "",
     username: "",
