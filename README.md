@@ -14,8 +14,5 @@ This is a simple React form validation project with routing.
 - PAN and Aadhar input
 - Success page after form submission
 
-## How to Run
 
-```bash
-npm install
-npm start
+
